@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#3498db">
+    <title>Device ID Viewer</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icons/icon-192x192.png">
+    <script>
+        // Check if service worker is supported
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('service-worker.js')
+                    .then(reg => console.log('Service Worker registered with scope:', reg.scope))
+                    .catch(err => console.error('Service Worker registration failed:', err));
+            });
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Device ID Viewer</h1>
+        <div class="device-info">
+            <div class="spinner" id="spinner"></div>
+            <div id="device-id-container" class="hidden">
+                <p>Your device identifier:</p>
+                <div class="id-box">
+                    <code id="device-id">Loading...</code>
+                    <button id="copy-button" aria-label="Copy to clipboard">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                    </button>
+                </div>
+                <div class="meta-info">
+                    <span id="id-source" class="tag"></span>
+                </div>
+                <div id="copy-notification" class="copy-notification hidden">Copied to clipboard!</div>
+            </div>
+        </div>
+        
+        <div class="info-section" id="device-details">
+            <h2>Device Details</h2>
+            <div class="detail-grid">
+                <div class="detail-item">
+                    <div class="detail-label">Device Type</div>
+                    <div class="detail-value" id="device-type">-</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">Operating System</div>
+                    <div class="detail-value" id="device-os">-</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">Browser</div>
+                    <div class="detail-value" id="device-browser">-</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">Screen Resolution</div>
+                    <div class="detail-value" id="device-screen">-</div>
+                </div>
+            </div>
+            <div class="refresh-container">
+                <button id="refresh-button">Refresh Device Info</button>
+            </div>
+        </div>
+        
+        <div class="features">
+            <div class="feature">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <path d="M12 7V9"></path>
+                    <path d="M12 15V17"></path>
+                    <path d="M7 12H9"></path>
+                    <path d="M15 12H17"></path>
+                </svg>
+                <h3>Native ID</h3>
+                <p>Shows your actual device identifiers</p>
+            </div>
+            <div class="feature">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                </svg>
+                <h3>Privacy First</h3>
+                <p>Your ID stays on your device</p>
+            </div>
+            <div class="feature">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                </svg>
+                <h3>Hardware Info</h3>
+                <p>View detailed device specifications</p>
+            </div>
+        </div>
+        
+        <div class="supported-apis-section">
+            <h2>Supported Device Features</h2>
+            <div class="api-grid" id="api-support-grid">
+                <!-- API support indicators will be added here dynamically -->
+            </div>
+        </div>
+        
+        <footer>
+            <p>© 2025 Device ID Viewer</p>
+            <p>Install this app on your device for easier access</p>
+        </footer>
+    </div>
+
+    <script src="NativeDeviceIdRetriever.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
